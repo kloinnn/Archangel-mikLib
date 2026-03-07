@@ -42,7 +42,7 @@ std::string blue_right_winpoint(bool calibrate, mik::auto_variation var, bool ge
     chassis.left_swing_to_angle(0, {.timeout = 1000}); //pivot on long goal with only left wheels
 
     // 3-balls
-    intake_in();
+    intake_in(); //might conflict with suck task
     const std::vector<point> path = {{-24.316,-28.645}, {-21.996,-5.064}, {-19.29, 15.424}, {-34.173, 34.367}, {-36.686, 46.93}};
     chassis.follow_path(path, follow_path_params{.wait=false});
     chassis.wait_until(12); // get to first set of 3-balls then put matchloader down
