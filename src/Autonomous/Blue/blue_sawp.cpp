@@ -10,6 +10,9 @@ std::string blue_sawp(bool calibrate, mik::auto_variation var, bool get_name) {
 
         return "";
     }
+
+    //dimensions of robot: 14 in wide, 12.75 behind, 15.25 back aligner, 
+    // 17.25 intqke, matchloader 26
     odom_constants();
     keepColor = BLUE;
     scoringTime = 2; //score in long goal for 2s max

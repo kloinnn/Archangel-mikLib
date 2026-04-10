@@ -135,9 +135,9 @@ void Assembly::matchloader() {
 
 void Assembly::wing() {
     if (Controller.ButtonY.pressing()) {
-        wing_piston.set(false);
+        wing_piston.set(true);
     } else {
-    wing_piston.set(true);
+    wing_piston.set(false);
     }
 }
 

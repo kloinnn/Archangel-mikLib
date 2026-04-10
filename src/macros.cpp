@@ -65,6 +65,13 @@ void stop_intake(){
   assembly.left_intake_bottom.stop(brake);
 }
 
+void score_high(){
+    assembly.left_intake_top.spin(fwd, -12, volt);
+    assembly.right_intake_bottom.spin(fwd, 12, volt);
+    assembly.left_intake_bottom.spin(fwd, -12, volt);
+    assembly.hood_piston.close();
+}
+
 void matchloader_down(){assembly.matchloader_piston.open();}
 void matchloader_up(){assembly.matchloader_piston.close();}
 
@@ -83,7 +90,7 @@ void long_goal_colorsort_auton(){
 
                 //if blue ball is detected on red alliance or red ball is detected on blue alliance
                     if ((ballnear && (keepColor == RED) && (hue > 180 && hue < 250)) || (ballnear && (keepColor == BLUE) && (hue > 350 || hue < 20))) {
-                    wait(0.2, sec); //continue outtaking for 0.2s before spinning the motors back
+                    wait(0.6, sec); //continue outtaking for 0.2s before spinning the motors back
                         vex::task outtake_one_ball_mid([](){ //task so that it can get rid of the ball as it moves on
                             assembly.hood_piston.close();
                             assembly.left_intake_top.spin(fwd, 12, volt); //outtake
@@ -94,6 +101,7 @@ void long_goal_colorsort_auton(){
                             assembly.right_intake_bottom.spin(fwd, -10, volt);
                             assembly.left_intake_bottom.spin(fwd, -12, volt);
                             vex::this_thread::sleep_for(200);
+                            assembly.hood_piston.open();
                             suck();
                         return 0;
                         });

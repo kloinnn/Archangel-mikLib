@@ -23,7 +23,7 @@ void default_constants(void) {
 void odom_constants(void) {
 	default_constants();
 	//was 0, .3
-	chassis.set_tracking_offsets(0, -0.2875);
+	chassis.set_tracking_offsets(0, -0.984375);
 
 	chassis.heading_max_voltage = 10;
 	chassis.drive_max_voltage = 8;

@@ -40,7 +40,7 @@ Chassis chassis(
 
     PORT16,  // Sideways tracker port
     2,       // Sideways tracker wheel diameter in inches (negative flips direction)
-    -0.2875,     // Sideways tracker center distance in inches (positive distance is behind the center of the robot, negative is in front)
+    -0.984375,     // Sideways tracker center distance in inches (positive distance is behind the center of the robot, negative is in front)
 
     mik::distance_reset({
 		//mik::distance(PORT17, front_sensor, 5, 5),
@@ -57,11 +57,11 @@ Assembly assembly(
 		vex::optical(PORT11), //optical sensor
 		vex::inertial(PORT7), //inertial sensor
         mik::piston(PORT_G, false), //mid hood
-        mik::piston(PORT_B, true), //odomlift
-        mik::piston(PORT_A, false), //hood
+        mik::piston(PORT_B, false), //odomlift
+        mik::piston(PORT_A, true), //hood
         mik::piston(PORT_F, false), //doinker
-        mik::piston(PORT_E, false), //wing
-        mik::piston(PORT_D, true) //intakelift
+        mik::piston(PORT_E, true), //wing
+        mik::piston(PORT_D, false) //intakelift
 );
 
 /** Allows UI to display all motor values */

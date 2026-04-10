@@ -28,7 +28,7 @@ void user_control(void) {
     while (calibrating) { task::sleep(50); }
 
     // close the odom lift as soon as driver control begins
-    assembly.odom_lift.open();
+    assembly.odom_lift.close();
 
     // How you want your drivetrain to stop during driver
     chassis.set_brake_type(brakeType::coast);

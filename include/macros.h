@@ -15,6 +15,8 @@ void intake_in();
 
 void stop_intake();
 
+void score_high();
+
 void outtake_low();
 void outtake_skills();
 
