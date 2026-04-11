@@ -16,12 +16,6 @@ std::string red_left_winpoint(bool calibrate, mik::auto_variation var, bool get_
   odom_constants();
     keepColor = BLUE;
     scoringTime = 1.5; //score in long goal for 2s max
-  
-    // experimental settle error changes (30 ms for settle time)
-    chassis.set_turn_exit_conditions(1.5, 30, 2000);
-    chassis.set_drive_exit_conditions(1, 30, 3000);
-    chassis.set_swing_exit_conditions(1.25, 30, 3000);
-
 
     //drive towards 1st matchloader
     chassis.turn_to_point(-49.2, -47.0, {.timeout = 100});
