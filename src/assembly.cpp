@@ -4,9 +4,9 @@ using namespace vex;
 
 // Pass in the devices we want to use
 Assembly::Assembly(
-        mik::motor left_intake_top,
-        mik::motor right_intake_bottom,
-        mik::motor left_intake_bottom, 
+        mik::motor middle_intake,
+        mik::motor top_intake,
+        mik::motor bottom_intake, 
         vex::optical color_encoder,
         vex::inertial inertial_sensor,
         mik::piston mid_hood_piston,
@@ -17,9 +17,9 @@ Assembly::Assembly(
         mik::piston intake_lift
 ) :
     // Assign the ports to the devices
-    left_intake_top(left_intake_top),
-    right_intake_bottom(right_intake_bottom),
-    left_intake_bottom(left_intake_bottom),
+    middle_intake(middle_intake),
+    top_intake(top_intake),
+    bottom_intake(bottom_intake),
     color_encoder(color_encoder),
     inertial_sensor(inertial_sensor),
     mid_hood_piston(mid_hood_piston),   // Make sure when using a 3 wire device that isnt mik::piston you convert the port. `to_triport(PORT_A)`.
@@ -49,6 +49,77 @@ void Assembly::control() {
     wing();
     anti_tip();
 }
+
+// Spins intake forward if R1 is being held, reverse if R2 is being held; stops otherwise
+void Assembly::intake_control() {
+    if (Controller.ButtonR2.pressing()) {
+        middle_intake.spin(fwd, -12, volt);
+        top_intake.spin(fwd, 12, volt);
+        bottom_intake.spin(fwd, -12, volt);
+    } else if (Controller.ButtonR1.pressing()) {
+        middle_intake.spin(fwd, 12, volt);
+        top_intake.spin(fwd, -12, volt);
+        bottom_intake.spin(fwd, 12, volt);
+        intake_lift.open();
+    } else if (Controller.ButtonL2.pressing()) { //score mid
+        middle_intake.spin(fwd, -12, volt);
+        top_intake.spin(fwd, -10, volt);
+        bottom_intake.spin(fwd, -12, volt);
+     } else if (Controller.ButtonL1.pressing()) { //score high
+     middle_intake.spin(fwd, -12, volt);
+     top_intake.spin(fwd, 12, volt);
+     bottom_intake.spin(fwd, -12, volt);
+     hood_piston.close();
+    } else {
+        bottom_intake.stop();
+        middle_intake.stop();
+        top_intake.stop();
+        hood_piston.open();
+        intake_lift.close();
+    }
+}
+
+// Extends or retracts wing when button A is pressed, can only extend or retract again until button A is released and pressed again
+void Assembly::mid_hood() {
+    if (btnLeft_new_press(Controller.ButtonLeft.pressing())) {
+        mid_hood_piston.toggle();
+    }
+}
+
+void Assembly::odom_lift_control() {
+    if (btnRight_new_press(Controller.ButtonUp.pressing())) {
+        odom_lift.toggle();
+        if(odom_lift.state()){ //rumbles the controller if the odom piston is open
+        Controller.rumble("-");
+    } 
+    }
+}
+
+void Assembly::matchloader() {
+    if (btnDown_new_press(Controller.ButtonRight.pressing())) {
+        matchloader_piston.toggle();
+    }
+}
+
+void Assembly::wing() {
+    if (Controller.ButtonY.pressing()) {
+        wing_piston.set(false);
+    } else {
+    wing_piston.set(true);
+    }
+}
+
+void Assembly::anti_tip() {
+    inertial_sensor.pitch();
+    if (inertial_sensor.pitch() > 60) {
+    chassis.left_drive.spin(vex::directionType::fwd, -12, vex::voltageUnits::volt);
+    chassis.right_drive.spin(vex::directionType::fwd, -12, vex::voltageUnits::volt);
+    } else if (inertial_sensor.pitch() < -60) {
+    chassis.left_drive.spin(vex::directionType::fwd, 12, vex::voltageUnits::volt);
+    chassis.right_drive.spin(vex::directionType::fwd, 12, vex::voltageUnits::volt);
+    }
+}
+
 
 // void Assembly::move_lift_arm() {
     // Create a proportional controller. Increase the P just enough so there isn't much oscillation.
@@ -81,73 +152,3 @@ void Assembly::control() {
 //         }
 //     }
 // }
-
-// Spins intake forward if R1 is being held, reverse if R2 is being held; stops otherwise
-void Assembly::intake_control() {
-    if (Controller.ButtonR2.pressing()) {
-        left_intake_top.spin(fwd, -12, volt);
-        right_intake_bottom.spin(fwd, 12, volt);
-        left_intake_bottom.spin(fwd, -12, volt);
-    } else if (Controller.ButtonR1.pressing()) {
-        left_intake_top.spin(fwd, 12, volt);
-        right_intake_bottom.spin(fwd, -12, volt);
-        left_intake_bottom.spin(fwd, 12, volt);
-        intake_lift.open();
-    } else if (Controller.ButtonL2.pressing()) { //score mid
-        left_intake_top.spin(fwd, -12, volt);
-        right_intake_bottom.spin(fwd, -10, volt);
-        left_intake_bottom.spin(fwd, -12, volt);
-     } else if (Controller.ButtonL1.pressing()) { //score high
-     left_intake_top.spin(fwd, -12, volt);
-     right_intake_bottom.spin(fwd, 10, volt);
-     left_intake_bottom.spin(fwd, -12, volt);
-     hood_piston.close();
-    } else {
-        left_intake_bottom.stop();
-        left_intake_top.stop();
-        right_intake_bottom.stop();
-        hood_piston.open();
-        intake_lift.close();
-    }
-}
-
-// Extends or retracts wing when button A is pressed, can only extend or retract again until button A is released and pressed again
-void Assembly::mid_hood() {
-    if (btnLeft_new_press(Controller.ButtonLeft.pressing())) {
-        mid_hood_piston.toggle();
-    }
-}
-
-void Assembly::odom_lift_control() {
-    if (btnRight_new_press(Controller.ButtonUp.pressing())) {
-        odom_lift.toggle();
-        if(odom_lift.state()){ //rumbles the controller if the odom piston is open
-        Controller.rumble("-");
-    } 
-    }
-}
-
-void Assembly::matchloader() {
-    if (btnDown_new_press(Controller.ButtonRight.pressing())) {
-        matchloader_piston.toggle();
-    }
-}
-
-void Assembly::wing() {
-    if (Controller.ButtonY.pressing()) {
-        wing_piston.set(true);
-    } else {
-    wing_piston.set(false);
-    }
-}
-
-void Assembly::anti_tip() {
-    inertial_sensor.pitch();
-    if (inertial_sensor.pitch() > 60) {
-    chassis.left_drive.spin(vex::directionType::fwd, -12, vex::voltageUnits::volt);
-    chassis.right_drive.spin(vex::directionType::fwd, -12, vex::voltageUnits::volt);
-    } else if (inertial_sensor.pitch() < -60) {
-    chassis.left_drive.spin(vex::directionType::fwd, 12, vex::voltageUnits::volt);
-    chassis.right_drive.spin(vex::directionType::fwd, 12, vex::voltageUnits::volt);
-    }
-}

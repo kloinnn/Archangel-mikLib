@@ -20,11 +20,13 @@ std::string red_left_winpoint(bool calibrate, mik::auto_variation var, bool get_
     chassis.set_turn_exit_conditions(1.5, 30, 2000);
     chassis.set_drive_exit_conditions(1, 50, 3000);
     chassis.set_swing_exit_conditions(1.25, 50, 3000);
+    assembly.wing_piston.set(true);
+
     //drive towards 1st matchloader
     chassis.turn_to_point(-49.2, -47.0, {.timeout = 100});
     chassis.drive_to_point(-49.2, -47.0);
     matchloader_down();
-    wait(0.3,sec);
+    wait(0.2,sec);
     chassis.turn_to_angle(270, {.settle_time = 20});
 
     //reset x and y coordinates
@@ -76,9 +78,9 @@ std::string red_left_winpoint(bool calibrate, mik::auto_variation var, bool get_
     
     // ensure any unscored balls are kept
     assembly.hood_piston.open();
-    assembly.left_intake_top.spin(fwd, 12, volt);
-    assembly.right_intake_bottom.spin(fwd, -12, volt);
-    assembly.left_intake_bottom.spin(fwd, 12, volt);
+    assembly.middle_intake.spin(fwd, 12, volt);
+    assembly.top_intake.spin(fwd, -12, volt);
+    assembly.bottom_intake.spin(fwd, 12, volt);
 
     // 2nd matchloader
     chassis.drive_to_pose(-53, 46.8, 270, {.min_voltage = 8, .wait=false});
@@ -93,22 +95,22 @@ std::string red_left_winpoint(bool calibrate, mik::auto_variation var, bool get_
     chassis.drive_to_pose(-11.4, 14.4, 315, {.max_voltage =12, .wait=false, .settle_time=10, .settle_error = 2});
     wait(.45, sec);
     // index balls to score mid
-    assembly.left_intake_top.spin(fwd, 12, volt);
-    assembly.right_intake_bottom.spin(fwd, -12, volt);
-    assembly.left_intake_bottom.spin(fwd, 12, volt);
+    assembly.middle_intake.spin(fwd, 12, volt);
+    assembly.top_intake.spin(fwd, -12, volt);
+    assembly.bottom_intake.spin(fwd, 12, volt);
     wait(.1, sec);
     matchloader_up();
-    assembly.left_intake_bottom.stop();
-    assembly.left_intake_top.stop();
-    assembly.right_intake_bottom.stop();
+    assembly.bottom_intake.stop();
+    assembly.middle_intake.stop();
+    assembly.top_intake.stop();
     chassis.wait();
     // score mid
-    assembly.left_intake_top.spin(fwd, -12, volt);
-    assembly.right_intake_bottom.spin(fwd, -3.5, volt);
-    assembly.left_intake_bottom.spin(fwd, -12, volt);
+    assembly.middle_intake.spin(fwd, -12, volt);
+    assembly.top_intake.spin(fwd, -3.5, volt);
+    assembly.bottom_intake.spin(fwd, -12, volt);
     chassis.drive_distance(-500, {.heading=315, .max_voltage=7, .min_voltage=6});
     wait(.3,sec);
-    assembly.right_intake_bottom.spin(fwd, -5.5, volt); //extra power in case of jams
+    assembly.top_intake.spin(fwd, -5.5, volt); //extra power in case of jams
 
     return "";
 }

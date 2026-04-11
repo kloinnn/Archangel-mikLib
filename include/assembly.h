@@ -9,9 +9,9 @@ using namespace vex;
 class Assembly {
 public:
     Assembly(
-        mik::motor left_intake_top,
-        mik::motor right_intake_bottom,
-        mik::motor left_intake_bottom, 
+        mik::motor middle_intake,
+        mik::motor top_intake,
+        mik::motor bottom_intake, 
         vex::optical color_encoder,
         vex::inertial inertial_sensor,
         mik::piston mid_hood_piston,
@@ -32,9 +32,9 @@ public:
     void wing();
     void anti_tip();
  
-    mik::motor left_intake_top;
-    mik::motor right_intake_bottom;
-    mik::motor left_intake_bottom;
+    mik::motor middle_intake;
+    mik::motor top_intake;
+    mik::motor bottom_intake;
     vex::optical color_encoder;
     vex::inertial inertial_sensor;
     mik::piston mid_hood_piston;
