@@ -46,6 +46,7 @@ std::string skills(bool calibrate, mik::auto_variation var, bool get_name) {
             { -39.779,  46.544 },
             { -56.015,  46.544 },
         };
+        assembly.intake_lift.close();
         intake_in();
         chassis.follow_path(path, {.lookahead_distance = 3, .settle_error = 1, .wait = false});
     }
@@ -132,7 +133,7 @@ std::string skills(bool calibrate, mik::auto_variation var, bool get_name) {
 
     //mid goal
     chassis.turn_to_point(11.5, -11.5, {.angle_offset = 180});
-    chassis.drive_to_point(-12.2, -12.2, {.wait=false});
+    chassis.drive_to_point(11.5, -11.5, {.wait=false});
     // index balls to score mid
     outtake();
     wait(.1, sec);
@@ -213,6 +214,7 @@ std::string skills(bool calibrate, mik::auto_variation var, bool get_name) {
         chassis.follow_path(path, {.lookahead_distance = 3, .settle_error = 1, .wait = false, .min_voltage = 6});
     }
     assembly.odom_lift.toggle();
+    stop_intake();
     chassis.drive_distance(500, {.heading=0, .min_voltage=6, .timeout=1000});
     chassis.stop_drive(brake);
 
