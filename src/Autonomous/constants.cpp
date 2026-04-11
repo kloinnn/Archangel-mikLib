@@ -11,7 +11,7 @@ void default_constants(void) {
     chassis.set_turn_constants(12, .257, .011, 2.0, 15);
     chassis.set_drive_constants(12, 1.38, 0, 8.5, 0);
     chassis.set_heading_constants(6, .4, 0, 1, 0);
-    chassis.set_swing_constants(12, .487, .0063, 5.256, 15);
+    chassis.set_swing_constants(12, .487, .0063, 3.256, 15);
 
 
 	// Each exit condition set is in the form of (settle_error, settle_time, timeout).
