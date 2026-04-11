@@ -72,6 +72,19 @@ void score_high(){
     assembly.hood_piston.close();
 }
 
+void outtake(){
+    assembly.middle_intake.spin(fwd, 12, volt);
+    assembly.top_intake.spin(fwd, -12, volt);
+    assembly.bottom_intake.spin(fwd, 12, volt);
+}
+
+void outtake_skills(){
+    assembly.middle_intake.spin(fwd, 12, volt);
+    assembly.top_intake.spin(fwd, -12, volt);
+    assembly.bottom_intake.spin(fwd, 5, volt);
+    assembly.intake_lift.open();
+}
+
 void matchloader_down(){assembly.matchloader_piston.open();}
 void matchloader_up(){assembly.matchloader_piston.close();}
 

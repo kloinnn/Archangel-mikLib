@@ -78,12 +78,10 @@ std::string red_left_winpoint(bool calibrate, mik::auto_variation var, bool get_
     
     // ensure any unscored balls are kept
     assembly.hood_piston.open();
-    assembly.middle_intake.spin(fwd, 12, volt);
-    assembly.top_intake.spin(fwd, -12, volt);
-    assembly.bottom_intake.spin(fwd, 12, volt);
+    outtake();
 
     // 2nd matchloader
-    chassis.drive_to_pose(-53, 46.8, 270, {.min_voltage = 8, .wait=false});
+    chassis.drive_to_pose(-53, 46.6, 270, {.min_voltage = 8, .wait=false});
     wait(.1, sec);
     intake_in();
     chassis.wait();
@@ -95,14 +93,10 @@ std::string red_left_winpoint(bool calibrate, mik::auto_variation var, bool get_
     chassis.drive_to_pose(-11.4, 14.4, 315, {.max_voltage =12, .wait=false, .settle_time=10, .settle_error = 2});
     wait(.45, sec);
     // index balls to score mid
-    assembly.middle_intake.spin(fwd, 12, volt);
-    assembly.top_intake.spin(fwd, -12, volt);
-    assembly.bottom_intake.spin(fwd, 12, volt);
+    outtake();
     wait(.1, sec);
     matchloader_up();
-    assembly.bottom_intake.stop();
-    assembly.middle_intake.stop();
-    assembly.top_intake.stop();
+    stop_intake();
     chassis.wait();
     // score mid
     assembly.middle_intake.spin(fwd, -12, volt);
