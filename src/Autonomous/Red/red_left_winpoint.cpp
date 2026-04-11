@@ -16,7 +16,10 @@ std::string red_left_winpoint(bool calibrate, mik::auto_variation var, bool get_
   odom_constants();
     keepColor = BLUE;
     scoringTime = 1.5; //score in long goal for 2s max
-
+    //change exit conditions to ensure robot will be on pace
+    chassis.set_turn_exit_conditions(1.5, 30, 2000);
+    chassis.set_drive_exit_conditions(1, 50, 3000);
+    chassis.set_swing_exit_conditions(1.25, 50, 3000);
     //drive towards 1st matchloader
     chassis.turn_to_point(-49.2, -47.0, {.timeout = 100});
     chassis.drive_to_point(-49.2, -47.0);
@@ -89,12 +92,12 @@ std::string red_left_winpoint(bool calibrate, mik::auto_variation var, bool get_
     chassis.set_drive_constants(12, 1.38, 0, 10, 0);
     chassis.drive_to_pose(-11.4, 14.4, 315, {.max_voltage =12, .wait=false, .settle_time=10, .settle_error = 2});
     wait(.45, sec);
-    matchloader_up();
     // index balls to score mid
     assembly.left_intake_top.spin(fwd, 12, volt);
     assembly.right_intake_bottom.spin(fwd, -12, volt);
     assembly.left_intake_bottom.spin(fwd, 12, volt);
     wait(.1, sec);
+    matchloader_up();
     assembly.left_intake_bottom.stop();
     assembly.left_intake_top.stop();
     assembly.right_intake_bottom.stop();
