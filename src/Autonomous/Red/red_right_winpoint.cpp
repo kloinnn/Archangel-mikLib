@@ -95,7 +95,7 @@ std::string red_right_winpoint(bool calibrate, mik::auto_variation var, bool get
     chassis.drive_distance(500, {.max_voltage=4.5, .timeout = 800});
 
     //score 1st long goal again
-    chassis.drive_to_pose(32.6, 47.2, 270, {.min_voltage = 6});
+    chassis.drive_to_pose(32.6, 47.2, 90, {.min_voltage = 6});
     score_high();
     matchloader_up();
     chassis.drive_distance(-500, {.heading=90, .min_voltage=6, .timeout=1500});
@@ -114,7 +114,7 @@ std::string red_right_winpoint(bool calibrate, mik::auto_variation var, bool get
     wait(.1, sec);
     stop_intake();
     chassis.wait();
-    chassis.turn_to_angle(270);
+    chassis.turn_to_angle(90);
     intake_in();
 
     //go forward something
