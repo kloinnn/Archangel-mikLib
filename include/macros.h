@@ -37,3 +37,5 @@ void suck();
 void colorsuck();
 
 void long_goal_colorsort_auton();
+
+void wiggle();

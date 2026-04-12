@@ -7,7 +7,7 @@ std::string red_right_winpoint(bool calibrate, mik::auto_variation var, bool get
     if (get_name) { return "red right winpoint"; }
     if (calibrate) {
         chassis.set_coordinates(-40.5, 0, 90);
-        
+        // assembly.odom_lift.close();
         return "";
     }
      //dimensions of robot: 14 in wide, 12.75 behind, 15.25 back aligner, 
@@ -16,13 +16,10 @@ std::string red_right_winpoint(bool calibrate, mik::auto_variation var, bool get
     assembly.color_encoder.setLight(vex::ledState::on);
 
     //go forward something
-    //go forward more something
-    //add a wiggle wiggle macro
-    //go backward something
+    intake_in();
 
     // 4-balls
     chassis.turn_to_point(-24.2, -24.2);
-    intake_in();
     chassis.drive_to_point(-24.2, -24.2);
 
     //low goal
@@ -105,7 +102,8 @@ std::string red_right_winpoint(bool calibrate, mik::auto_variation var, bool get
     // line up for 2nd park zone
     {
         std::vector<point> path = {
-            { 37.537,  32.434 },
+            { 35,  47.2 },
+            { 39,  33 },
             { 41.209,  19.097 },
             { 41.6,  0 },
         };
@@ -210,9 +208,9 @@ std::string red_right_winpoint(bool calibrate, mik::auto_variation var, bool get
         };
         chassis.follow_path(path, {.lookahead_distance = 3, .settle_error = 1, .wait = false, .min_voltage = 6});
     }
-    assembly.odom_lift.toggle();
+    assembly.odom_lift.close();
     stop_intake();
-    chassis.drive_distance(500, {.heading=0, .min_voltage=6, .timeout=1000});
+    chassis.drive_distance(500, {.heading=0, .max_voltage=8, .timeout=1000});
     chassis.stop_drive(brake);
     return "";
 }

@@ -59,6 +59,17 @@ void intake_in(){
 
 }
 
+void wiggle(){
+    chassis.drive_with_voltage(-2, 8);
+    wait(0.3, sec);
+    chassis.drive_with_voltage(8, -2);
+    wait(0.6, sec);
+    chassis.drive_with_voltage(-2, 8);
+    wait(0.6, sec);
+    chassis.drive_with_voltage(8, -2);
+    wait(0.3, sec);
+}
+
 void stop_intake(){
   assembly.middle_intake.stop(brake);
   assembly.top_intake.stop(brake);
