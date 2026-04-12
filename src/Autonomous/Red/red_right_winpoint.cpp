@@ -75,7 +75,7 @@ std::string red_right_winpoint(bool calibrate, mik::auto_variation var, bool get
     chassis.wait();
 
     //1st long goal
-    chassis.turn_to_point(32.6, 47.2);
+    chassis.turn_to_point(32.6, 47.2, {.angle_offset = 180});
     chassis.drive_to_point(32.6, 47.2);
     score_high();
     matchloader_down();
@@ -174,7 +174,7 @@ std::string red_right_winpoint(bool calibrate, mik::auto_variation var, bool get
     chassis.wait();
 
     //2nd long goal
-    chassis.turn_to_point(-32.6, -47.2);
+    chassis.turn_to_point(-32.6, -47.2, {.angle_offset = 180});
     chassis.drive_to_point(-32.6, -47.2);
     score_high();
     matchloader_down();
