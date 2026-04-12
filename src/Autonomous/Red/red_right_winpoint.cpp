@@ -37,8 +37,8 @@ std::string red_right_winpoint(bool calibrate, mik::auto_variation var, bool get
             { -25.475, 1.70},
             { -25.8,   21.0 },
             { -31.274,  34.753 },
-            { -39.779,  46.544 },
-            { -56.015,  46.544 },
+            { -43.779,  46.544 },
+            { -53.015,  46.544 },
         };
         assembly.intake_lift.close();
         intake_in();
@@ -51,12 +51,13 @@ std::string red_right_winpoint(bool calibrate, mik::auto_variation var, bool get
 
     //1st matchloader
     chassis.turn_to_angle(270, {.settle_time = 20, .timeout = 100});
+    chassis.drive_distance(2.5, {.heading = 270, .max_voltage=8, .min_voltage=5.5});
     chassis.drive_distance(500, {.heading = 270, .max_voltage=6, .min_voltage=5.5, .timeout = 1000});
 
     //across field to 1st long goal
     {
         std::vector<point> path = {
-            { -56.015,  46.544 },
+            { -52.015,  46.544 },
             { -40.745,  51.376 },
             { -29.148,  58.528 },
             { -3.827,  60.5 },
@@ -148,15 +149,14 @@ std::string red_right_winpoint(bool calibrate, mik::auto_variation var, bool get
     chassis.turn_to_point(62, -46.5);
 
     // 3rd matchloader
-    chassis.turn_to_angle(90);
     intake_in();
-    chassis.drive_distance(2.5, {.heading = 90, .max_voltage=8, .min_voltage=5.5});
+    chassis.drive_distance(9, {.heading = 90, .max_voltage=8, .min_voltage=5.5});
     chassis.drive_distance(500, {.max_voltage=4.5, .timeout = 1000});
 
     //across field to 2nd long goal
     {
         std::vector<point> path = {
-            { 56.015,  -46.544 },
+            { 52.015,  -46.544 },
             { 40.745,  -51.376 },
             { 29.148,  -58.528 },
             { 3.827,  -60.5 },
