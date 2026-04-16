@@ -21,14 +21,19 @@ void pre_auton() {
 
 void auton(void) {
     UI.stop();
+    //wtf am i even doing
+    //assembly.wing_piston.close();
     auton_scr->start_auton();
 }
 
 void user_control(void) {
     while (calibrating) { task::sleep(50); }
 
-    // close the odom lift as soon as driver control begins
-    assembly.odom_lift.close();
+    // toggle the odom lift as soon as driver control begins
+    //assembly.odom_lift.toggle();
+    
+    // close the wing as soon as driver control begins
+    //assembly.wing_piston.open();
 
     // How you want your drivetrain to stop during driver
     chassis.set_brake_type(brakeType::coast);
