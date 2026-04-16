@@ -13,19 +13,39 @@ std::string skills(bool calibrate, mik::auto_variation var, bool get_name) {
         return "";
     }
     
-    //dimensions of robot: 14 in wide, 12.75 behind, 15.25 back aligner, 
+     //dimensions of robot: 14 in wide, 12.75 behind, 15.25 back aligner, 
     // 17.25 intqke, matchloader 26
     odom_constants();
     assembly.color_encoder.setLight(vex::ledState::on);
 
     //go forward something
-    //go forward more something
-    //add a wiggle wiggle macro
-    //go backward something
+    intake_in();
+
+    // //go forward something
+    // intake_in();
+    // chassis.drive_with_voltage(6, 6);
+    // wait(.5, sec);
+    // chassis.stop_drive(coast);
+    // wait(1, sec);
+    // //go forward more something
+    // chassis.drive_with_voltage(12, 12);
+    // wait(.5, sec);
+    // //add a wiggle wiggle macro
+    // chassis.drive_distance(50, {.heading = 260, .timeout = 100});
+    // chassis.drive_distance(50, {.heading = 280, .timeout = 200});
+    // chassis.drive_distance(50, {.heading = 260, .timeout = 200});
+    // chassis.drive_distance(50, {.heading = 280, .timeout = 200});
+    // chassis.turn_to_angle(270, {.settle_time = 10, .timeout = 150});
+    // //go backward something
+    // chassis.drive_distance(-43.5, {.heading = 270, .wait=false});
+    // wait(1, sec);
+    // assembly.odom_lift.close();
+    // chassis.wait();
+    // // chassis.set_coordinates(-42, 0, chassis.get_absolute_heading());
+    // // //chassis.reset_axis(front_sensor, left_wall, 10);
 
     // 4-balls
     chassis.turn_to_point(-24.2, -24.2);
-    intake_in();
     chassis.drive_to_point(-24.2, -24.2);
 
     //low goal
@@ -43,8 +63,8 @@ std::string skills(bool calibrate, mik::auto_variation var, bool get_name) {
             { -25.475, 1.70},
             { -25.8,   21.0 },
             { -31.274,  34.753 },
-            { -39.779,  46.544 },
-            { -56.015,  46.544 },
+            { -43.779,  46.544 },
+            { -53.015,  46.544 },
         };
         assembly.intake_lift.close();
         intake_in();
@@ -57,12 +77,13 @@ std::string skills(bool calibrate, mik::auto_variation var, bool get_name) {
 
     //1st matchloader
     chassis.turn_to_angle(270, {.settle_time = 20, .timeout = 100});
+    chassis.drive_distance(2.5, {.heading = 270, .max_voltage=8, .min_voltage=5.5});
     chassis.drive_distance(500, {.heading = 270, .max_voltage=6, .min_voltage=5.5, .timeout = 1000});
 
     //across field to 1st long goal
     {
         std::vector<point> path = {
-            { -56.015,  46.544 },
+            { -52.015,  46.544 },
             { -40.745,  51.376 },
             { -29.148,  58.528 },
             { -3.827,  60.5 },
@@ -78,7 +99,7 @@ std::string skills(bool calibrate, mik::auto_variation var, bool get_name) {
     chassis.wait();
 
     //1st long goal
-    chassis.turn_to_point(32.6, 47.2);
+    chassis.turn_to_point(32.6, 47.2, {.angle_offset = 180});
     chassis.drive_to_point(32.6, 47.2);
     score_high();
     matchloader_down();
@@ -98,7 +119,7 @@ std::string skills(bool calibrate, mik::auto_variation var, bool get_name) {
     chassis.drive_distance(500, {.max_voltage=4.5, .timeout = 800});
 
     //score 1st long goal again
-    chassis.drive_to_pose(32.6, 47.2, 270, {.min_voltage = 6});
+    chassis.drive_to_pose(32.6, 47.2, 90, {.min_voltage = 6});
     score_high();
     matchloader_up();
     chassis.drive_distance(-500, {.heading=90, .min_voltage=6, .timeout=1500});
@@ -108,7 +129,8 @@ std::string skills(bool calibrate, mik::auto_variation var, bool get_name) {
     // line up for 2nd park zone
     {
         std::vector<point> path = {
-            { 37.537,  32.434 },
+            { 35,  47.2 },
+            { 39,  33 },
             { 41.209,  19.097 },
             { 41.6,  0 },
         };
@@ -117,7 +139,7 @@ std::string skills(bool calibrate, mik::auto_variation var, bool get_name) {
     wait(.1, sec);
     stop_intake();
     chassis.wait();
-    chassis.turn_to_angle(270);
+    chassis.turn_to_angle(90);
     intake_in();
 
     //go forward something
@@ -153,15 +175,14 @@ std::string skills(bool calibrate, mik::auto_variation var, bool get_name) {
     chassis.turn_to_point(62, -46.5);
 
     // 3rd matchloader
-    chassis.turn_to_angle(90);
     intake_in();
-    chassis.drive_distance(2.5, {.heading = 90, .max_voltage=8, .min_voltage=5.5});
+    chassis.drive_distance(9, {.heading = 90, .max_voltage=8, .min_voltage=5.5});
     chassis.drive_distance(500, {.max_voltage=4.5, .timeout = 1000});
 
     //across field to 2nd long goal
     {
         std::vector<point> path = {
-            { 56.015,  -46.544 },
+            { 52.015,  -46.544 },
             { 40.745,  -51.376 },
             { 29.148,  -58.528 },
             { 3.827,  -60.5 },
@@ -177,7 +198,7 @@ std::string skills(bool calibrate, mik::auto_variation var, bool get_name) {
     chassis.wait();
 
     //2nd long goal
-    chassis.turn_to_point(-32.6, -47.2);
+    chassis.turn_to_point(-32.6, -47.2, {.angle_offset = 180});
     chassis.drive_to_point(-32.6, -47.2);
     score_high();
     matchloader_down();
@@ -213,9 +234,9 @@ std::string skills(bool calibrate, mik::auto_variation var, bool get_name) {
         };
         chassis.follow_path(path, {.lookahead_distance = 3, .settle_error = 1, .wait = false, .min_voltage = 6});
     }
-    assembly.odom_lift.toggle();
+    assembly.odom_lift.close();
     stop_intake();
-    chassis.drive_distance(500, {.heading=0, .min_voltage=6, .timeout=1000});
+    chassis.drive_distance(500, {.heading=0, .max_voltage=8, .timeout=1000});
     chassis.stop_drive(brake);
 
 

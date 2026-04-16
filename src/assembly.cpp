@@ -87,7 +87,7 @@ void Assembly::mid_hood() {
 }
 
 void Assembly::odom_lift_control() {
-    if (btnRight_new_press(Controller.ButtonUp.pressing())) {
+    if (btnUp_new_press(Controller.ButtonUp.pressing())) {
         odom_lift.toggle();
         if(odom_lift.state()){ //rumbles the controller if the odom piston is open
         Controller.rumble("-");
@@ -96,29 +96,35 @@ void Assembly::odom_lift_control() {
 }
 
 void Assembly::matchloader() {
-    if (btnDown_new_press(Controller.ButtonRight.pressing())) {
+    if (btnRight_new_press(Controller.ButtonRight.pressing())) {
         matchloader_piston.toggle();
     }
 }
 
 void Assembly::wing() {
-    if (Controller.ButtonY.pressing()) {
-        wing_piston.set(false);
-    } else {
-    wing_piston.set(true);
+    if (btnY_new_press(Controller.ButtonY.pressing())) {
+        wing_piston.toggle();
     }
 }
 
-void Assembly::anti_tip() {
-    inertial_sensor.pitch();
-    if (inertial_sensor.pitch() > 60) {
-    chassis.left_drive.spin(vex::directionType::fwd, -12, vex::voltageUnits::volt);
-    chassis.right_drive.spin(vex::directionType::fwd, -12, vex::voltageUnits::volt);
-    } else if (inertial_sensor.pitch() < -60) {
-    chassis.left_drive.spin(vex::directionType::fwd, 12, vex::voltageUnits::volt);
-    chassis.right_drive.spin(vex::directionType::fwd, 12, vex::voltageUnits::volt);
-    }
-}
+// void Assembly::wing() {
+//     if (Controller.ButtonY.pressing()) {
+//         wing_piston.set(false);
+//     } else {
+//     wing_piston.set(true);
+//     }
+// }
+
+// void Assembly::anti_tip() {
+//     inertial_sensor.pitch();
+//     if (inertial_sensor.pitch() > 60) {
+//     chassis.left_drive.spin(vex::directionType::fwd, -12, vex::voltageUnits::volt);
+//     chassis.right_drive.spin(vex::directionType::fwd, -12, vex::voltageUnits::volt);
+//     } else if (inertial_sensor.pitch() < -60) {
+//     chassis.left_drive.spin(vex::directionType::fwd, 12, vex::voltageUnits::volt);
+//     chassis.right_drive.spin(vex::directionType::fwd, 12, vex::voltageUnits::volt);
+//     }
+// }
 
 
 // void Assembly::move_lift_arm() {
