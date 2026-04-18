@@ -90,6 +90,7 @@ void Assembly::odom_lift_control() {
     if (odomafterauton == true) {
         odom_lift.toggle();
         odomafterauton = false;
+        //Controller.rumble("-"); //test
     }
     if (btnUp_new_press(Controller.ButtonUp.pressing())) {
         odom_lift.toggle();
@@ -109,6 +110,7 @@ void Assembly::wing() {
     if (wingafterauton == true && wing_piston.state()){ //ensures wing is always up at the start of driver control
         wing_piston.toggle();
         wingafterauton = false;
+        Controller.rumble(".");
     }
     if (btnY_new_press(Controller.ButtonY.pressing())) {
         wing_piston.toggle();
@@ -120,17 +122,17 @@ void Assembly::wing() {
 // void Assembly::wing() {
 //     if (Controller.ButtonY.pressing() && wingafterauton == true) {
 //         wing_piston.set(false);
-//     } else if (!Controller.ButtonY.pressing() && wingafterauton == false) {
+//     } else if (wingafterauton == false) {
 //         wing_piston.set(false);
-//     } else if (Controller.ButtonY.pressing() && wingafterauton == false) {
-//         wingafterauton = true;
 //    } else {
 //     wing_piston.set(true);
 //     }
 // }
 
-
-
+//     } else if (!Controller.ButtonY.pressing() && wingafterauton == false) {
+//         wing_piston.set(false);
+//     } else if (Controller.ButtonY.pressing() && wingafterauton == false) {
+//         wingafterauton = true;
 
 
 
