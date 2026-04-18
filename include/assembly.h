@@ -30,7 +30,7 @@ public:
     void odom_lift_control();
     void matchloader();
     void wing();
-    void anti_tip();
+    //void anti_tip();
  
     mik::motor middle_intake;
     mik::motor top_intake;

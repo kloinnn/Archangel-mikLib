@@ -47,7 +47,7 @@ void Assembly::control() {
     odom_lift_control();
     matchloader();
     wing();
-    anti_tip();
+    //anti_tip();
 }
 
 // Spins intake forward if R1 is being held, reverse if R2 is being held; stops otherwise
@@ -56,10 +56,10 @@ void Assembly::intake_control() {
         middle_intake.spin(fwd, -12, volt);
         top_intake.spin(fwd, 12, volt);
         bottom_intake.spin(fwd, -12, volt);
-    } else if (Controller.ButtonR1.pressing()) {
+    } else if (Controller.ButtonR1.pressing()) { //score low
         middle_intake.spin(fwd, 12, volt);
         top_intake.spin(fwd, -12, volt);
-        bottom_intake.spin(fwd, 12, volt);
+        bottom_intake.spin(fwd, 6, volt);
         intake_lift.open();
     } else if (Controller.ButtonL2.pressing()) { //score mid
         middle_intake.spin(fwd, -12, volt);

@@ -53,14 +53,14 @@ Chassis chassis(
 Assembly assembly(
         mik::motor(PORT7, false, green_18_1, "middleIntake"),
         mik::motor(PORT9, false, green_18_1, "topIntake"),
-        mik::motor(PORT10, false, blue_6_1, "bottomIntake"), 
+        mik::motor(PORT10, true, blue_6_1, "bottomIntake"), 
 		vex::optical(PORT11), //optical sensor
 		vex::inertial(PORT7), //inertial sensor
         mik::piston(PORT_G, false), //mid hood
         mik::piston(PORT_B, false), //odomlift
         mik::piston(PORT_A, true), //hood
         mik::piston(PORT_F, false), //doinker
-        mik::piston(PORT_E, false), //wing
+        mik::piston(PORT_E, true), //wing
         mik::piston(PORT_D, false) //intakelift
 );
 
