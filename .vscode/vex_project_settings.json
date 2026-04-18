@@ -2,7 +2,7 @@
 	"project": {
 		"name": "ArcAngle",
 		"slot": 1,
-		"description": "mikLib-v1.2.3                 Press X to hide auton selector",
+		"description": "Press X to hide auton selector",
 		"platform": "V5",
 		"creationDate": "Mon, 02 Mar 2026 07:49:55 GMT",
 		"language": "cpp",
