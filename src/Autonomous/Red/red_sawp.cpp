@@ -14,6 +14,7 @@ std::string red_sawp(bool calibrate, mik::auto_variation var, bool get_name) {
     //dimensions of robot: 14 in wide, 12.75 behind, 15.25 back aligner, 
     // 17.25 intqke, matchloader 26
     odom_constants();
+    afterauton();
 
     //change exit conditions to ensure robot will be on pace
     // chassis.set_turn_exit_conditions(1.5, 30, 2000);
@@ -28,18 +29,10 @@ std::string red_sawp(bool calibrate, mik::auto_variation var, bool get_name) {
     wait(0.2,sec);
     chassis.turn_to_angle(270, {.settle_time = 20});
 
-    //reset x and y coordinates
-    // chassis.reset_axis(front_sensor, left_wall, 5);
-    // chassis.reset_axis(left_sensor, bottom_wall, 5);
-
     // 1st matchloader
     intake_in();
     chassis.drive_distance(2.5, {.max_voltage=6, .min_voltage=5});
     chassis.drive_distance(500, {.max_voltage=6, .min_voltage=5.5, .timeout = 650});
-
-    //reset x and y coordinates
-    // chassis.reset_axis(front_sensor, left_wall, 5);
-    // chassis.reset_axis(left_sensor, bottom_wall, 5);
 
     // 1st long goal
     chassis.cancel_motion();
@@ -100,6 +93,7 @@ std::string red_sawp(bool calibrate, mik::auto_variation var, bool get_name) {
     matchloader_up();
     stop_intake();
     chassis.wait();
+
     // score mid
     assembly.middle_intake.spin(fwd, -12, volt);
     assembly.top_intake.spin(fwd, -6, volt);

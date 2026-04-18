@@ -10,6 +10,8 @@ enum AllianceColor {
 extern AllianceColor keepColor;
 extern double hue;
 extern double scoringTime;
+extern bool wingafterauton;
+extern bool odomafterauton;
 
 void intake_in();
 
@@ -39,3 +41,5 @@ void colorsuck();
 void long_goal_colorsort_auton();
 
 void wiggle();
+
+void afterauton();

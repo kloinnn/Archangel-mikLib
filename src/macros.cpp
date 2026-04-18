@@ -6,6 +6,8 @@ using namespace mik;
 AllianceColor keepColor;
 double hue;
 double scoringTime;
+bool wingafterauton = false;
+bool odomafterauton = false;
 
 void intake_in(){
     assembly.middle_intake.spin(fwd, -12, volt);
@@ -53,6 +55,14 @@ void wiggle(){
     chassis.drive_with_voltage(8, -2);
     wait(0.3, sec);
 }
+
+void afterauton() {
+    odomafterauton = true;
+    wingafterauton = true;
+}
+
+
+
 
 void long_goal_colorsort_auton(){
     assembly.middle_intake.spin(fwd, -12, volt);

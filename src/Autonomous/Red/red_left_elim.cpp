@@ -14,6 +14,7 @@ std::string red_left_elim(bool calibrate, mik::auto_variation var, bool get_name
     // 17.25 intqke, matchloader 26
     odom_constants();
     assembly.wing_piston.toggle();
+    afterauton();
 
     //change exit conditions to ensure robot will be on pace
     // chassis.set_turn_exit_conditions(1.5, 30, 2000);
@@ -66,6 +67,7 @@ std::string red_left_elim(bool calibrate, mik::auto_variation var, bool get_name
     assembly.bottom_intake.spin(fwd, -12, volt);
     chassis.drive_distance(-500, {.heading=315, .max_voltage=2, .min_voltage=1, .timeout = 700});
 
+    //wing
     chassis.turn_to_point(-29.6, 35.7, {.settle_time = 20});
     matchloader_up();
     chassis.drive_to_point(-29.6, 35.7, {.settle_time = 20});
@@ -76,21 +78,5 @@ std::string red_left_elim(bool calibrate, mik::auto_variation var, bool get_name
     chassis.stop_drive(hold);
     wait(10, sec);
 
-
-
-    // // wing
-    // // chassis.drive_distance(0.5);
-    // //chassis.left_swing_to_angle(90);
-    // chassis.drive_to_pose(-32,-36,5, {.lead = 0.1});
-    // stop_intake();
-    // chassis.turn_to_point(-8.5, -36.2);
-    // assembly.wing_piston.toggle();
-    // chassis.drive_to_point(-8.5, -36.2, {.timeout = 15000});
-    // chassis.turn_to_angle(55, {.timeout = 15000});
-    // chassis.stop_drive(hold);
-    // wait(10, sec);
-
-
-    //{.lead = 0.3}
     return "";
 }

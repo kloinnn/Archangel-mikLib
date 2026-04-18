@@ -14,6 +14,7 @@ std::string red_right_elim(bool calibrate, mik::auto_variation var, bool get_nam
     // 17.25 intqke, matchloader 26
     odom_constants();
     assembly.wing_piston.toggle();
+    afterauton();
 
     //change exit conditions to ensure robot will be on pace
     // chassis.set_turn_exit_conditions(1.5, 30, 2000);
@@ -53,7 +54,5 @@ std::string red_right_elim(bool calibrate, mik::auto_variation var, bool get_nam
     chassis.stop_drive(hold);
     wait(10, sec);
 
-
-    //{.lead = 0.3}
     return "";
 }

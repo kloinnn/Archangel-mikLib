@@ -87,6 +87,10 @@ void Assembly::mid_hood() {
 }
 
 void Assembly::odom_lift_control() {
+    if (odomafterauton == true) {
+        odom_lift.toggle();
+        odomafterauton = false;
+    }
     if (btnUp_new_press(Controller.ButtonUp.pressing())) {
         odom_lift.toggle();
         if(odom_lift.state()){ //rumbles the controller if the odom piston is open
@@ -102,18 +106,34 @@ void Assembly::matchloader() {
 }
 
 void Assembly::wing() {
+    if (wingafterauton == true && wing_piston.state()){ //ensures wing is always up at the start of driver control
+        wing_piston.toggle();
+        wingafterauton = false;
+    }
     if (btnY_new_press(Controller.ButtonY.pressing())) {
         wing_piston.toggle();
     }
 }
 
+
+// HOLD WING (uncomment wingafterauton in macros.h and use afterauton macro)
 // void Assembly::wing() {
-//     if (Controller.ButtonY.pressing()) {
+//     if (Controller.ButtonY.pressing() && wingafterauton == true) {
 //         wing_piston.set(false);
-//     } else {
+//     } else if (!Controller.ButtonY.pressing() && wingafterauton == false) {
+//         wing_piston.set(false);
+//     } else if (Controller.ButtonY.pressing() && wingafterauton == false) {
+//         wingafterauton = true;
+//    } else {
 //     wing_piston.set(true);
 //     }
 // }
+
+
+
+
+
+
 
 // void Assembly::anti_tip() {
 //     inertial_sensor.pitch();

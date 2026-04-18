@@ -12,6 +12,8 @@ std::string blue_right_elim(bool calibrate, mik::auto_variation var, bool get_na
     }
 
     odom_constants();
+    assembly.wing_piston.toggle();
+    afterauton();
 
     //assembly.wing_piston.toggle();
     chassis.turn_to_point(-25, -20.5, {.timeout = 100});

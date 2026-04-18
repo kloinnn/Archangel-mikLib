@@ -29,12 +29,6 @@ void auton(void) {
 void user_control(void) {
     while (calibrating) { task::sleep(50); }
 
-    // toggle the odom lift as soon as driver control begins
-    //assembly.odom_lift.toggle();
-    
-    // close the wing as soon as driver control begins
-    //assembly.wing_piston.open();
-
     // How you want your drivetrain to stop during driver
     chassis.set_brake_type(brakeType::coast);
     
