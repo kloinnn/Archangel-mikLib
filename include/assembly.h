@@ -26,6 +26,7 @@ public:
     void control();
 
     void intake_control();
+    void mid_score_control();
     void mid_hood();
     void odom_lift_control();
     void matchloader();

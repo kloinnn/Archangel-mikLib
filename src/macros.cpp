@@ -8,6 +8,7 @@ double hue;
 double scoringTime;
 bool wingafterauton = false;
 bool odomafterauton = false;
+bool midscoreindexing = false;
 
 void intake_in(){
     assembly.middle_intake.spin(fwd, -12, volt);

@@ -31,7 +31,7 @@ std::string red_left_elim(bool calibrate, mik::auto_variation var, bool get_name
     // matchloader
     intake_in();
     chassis.drive_distance(2.5, {.max_voltage=6, .min_voltage=5});
-    chassis.drive_distance(500, {.max_voltage=6, .min_voltage=5.5, .timeout = 750});
+    chassis.drive_distance(500, {.max_voltage=6, .min_voltage=5.5, .timeout = 650});
 
     // long goal
     chassis.stop_drive(brake);
@@ -39,7 +39,7 @@ std::string red_left_elim(bool calibrate, mik::auto_variation var, bool get_name
     chassis.drive_to_point(-27.5, 47.2, {.timeout = 1250});
     //chassis.drive_to_pose(-27.0, 47.2, 270); //drive towards
     score_high(); //score long goal
-    chassis.drive_distance(-500, {.heading=270, .max_voltage=4, .min_voltage = 3, .timeout=500});
+    chassis.drive_distance(-500, {.heading=270, .max_voltage=4, .min_voltage = 3, .timeout=850});
     matchloader_up();
    // chassis.turn_to_angle(180, {.settle_time = 15});
     
@@ -53,28 +53,29 @@ std::string red_left_elim(bool calibrate, mik::auto_variation var, bool get_name
         matchloader_down();
     chassis.wait();
     chassis.turn_to_angle(315, {.settle_time = 20});
-    chassis.drive_distance(-9.5, {.heading = 315, .min_voltage = 6, .wait = false});
+    chassis.drive_distance(-13, {.heading = 315, .min_voltage = 6, .wait = false, .timeout = 1200});
     // index balls to score mid
     outtake();
-    wait(.1, sec);
-    matchloader_up();
+    wait(.15, sec);
     stop_intake();
     chassis.wait();
 
-    // // score mid
+    // score mid
+    matchloader_up();
     assembly.middle_intake.spin(fwd, -12, volt);
-    assembly.top_intake.spin(fwd, -6, volt);
+    assembly.top_intake.spin(fwd, -5, volt);
     assembly.bottom_intake.spin(fwd, -12, volt);
-    chassis.drive_distance(-500, {.heading=315, .max_voltage=2, .min_voltage=1, .timeout = 700});
+    chassis.drive_distance(-500, {.heading=315, .max_voltage=2, .min_voltage=1, .timeout = 800});
 
     //wing
-    chassis.turn_to_point(-29.6, 35.7, {.settle_time = 20});
+    chassis.turn_to_point(-29.6, 34.5, {.settle_time = 20});
     matchloader_up();
-    chassis.drive_to_point(-29.6, 35.7, {.settle_time = 20});
+    chassis.drive_to_point(-29.6, 34.5, {.settle_time = 20});
     stop_intake();
     assembly.wing_piston.toggle();
     chassis.turn_to_angle(270);
     chassis.drive_distance(-18, {.heading=270, .max_voltage=12, .timeout = 15000});
+    chassis.drive_distance(-4, {.heading=270, .max_voltage=3, .timeout = 15000});
     chassis.stop_drive(hold);
     wait(10, sec);
 

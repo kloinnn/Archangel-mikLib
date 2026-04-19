@@ -43,6 +43,7 @@ void Assembly::init() {
 // You want to put this function inside the user control loop in main.
 void Assembly::control() {
     intake_control();
+    mid_score_control();
     mid_hood();
     odom_lift_control();
     matchloader();
@@ -61,27 +62,40 @@ void Assembly::intake_control() {
         top_intake.spin(fwd, -12, volt);
         bottom_intake.spin(fwd, 6, volt);
         intake_lift.open();
-    } else if (Controller.ButtonL2.pressing()) { //score mid
+    } else if (Controller.ButtonL2.pressing() && midscoreindexing == true) { //score mid
         middle_intake.spin(fwd, -12, volt);
-        top_intake.spin(fwd, -10, volt);
+        top_intake.spin(fwd, -8, volt);
         bottom_intake.spin(fwd, -12, volt);
      } else if (Controller.ButtonL1.pressing()) { //score high
      middle_intake.spin(fwd, -12, volt);
      top_intake.spin(fwd, 12, volt);
      bottom_intake.spin(fwd, -12, volt);
      hood_piston.close();
-    } else {
+     } else if (Controller.ButtonL2.pressing() && midscoreindexing == false){
+     } else {
         bottom_intake.stop();
         middle_intake.stop();
         top_intake.stop();
         hood_piston.open();
         intake_lift.close();
+        midscoreindexing = false;
+     }
+}
+
+void Assembly::mid_score_control() { //outtake a bit before scoring
+    if (btnL2_new_press(Controller.ButtonL2.pressing()) && midscoreindexing == false) {
+        middle_intake.spin(fwd, 12, volt);
+        top_intake.spin(fwd, -12, volt);
+        bottom_intake.spin(fwd, -6, volt);
+        vex::this_thread::sleep_for(100);
+        midscoreindexing = true;
+    
     }
 }
 
 // Extends or retracts wing when button A is pressed, can only extend or retract again until button A is released and pressed again
 void Assembly::mid_hood() {
-    if (btnLeft_new_press(Controller.ButtonLeft.pressing())) {
+    if (btnUp_new_press(Controller.ButtonUp.pressing())) {
         mid_hood_piston.toggle();
     }
 }
@@ -92,7 +106,7 @@ void Assembly::odom_lift_control() {
         odomafterauton = false;
         //Controller.rumble("-"); //test
     }
-    if (btnUp_new_press(Controller.ButtonUp.pressing())) {
+    if (btnLeft_new_press(Controller.ButtonLeft.pressing())) {
         odom_lift.toggle();
         if(!odom_lift.state()){ //rumbles the controller if the odom piston is down
         Controller.rumble("-");
@@ -110,7 +124,6 @@ void Assembly::wing() {
     if (wingafterauton == true && wing_piston.state()){ //ensures wing is always up at the start of driver control
         wing_piston.toggle();
         wingafterauton = false;
-        Controller.rumble(".");
     }
     if (btnY_new_press(Controller.ButtonY.pressing())) {
         wing_piston.toggle();
@@ -122,12 +135,29 @@ void Assembly::wing() {
 // void Assembly::wing() {
 //     if (Controller.ButtonY.pressing() && wingafterauton == true) {
 //         wing_piston.set(false);
-//     } else if (wingafterauton == false) {
+//     } else if (!Controller.ButtonY.pressing() && wingafterauton == false) {
 //         wing_piston.set(false);
+//     } else if (Controller.ButtonY.pressing() && wingafterauton == false) {
+//         wingafterauton = true;
 //    } else {
 //     wing_piston.set(true);
 //     }
 // }
+
+
+// HOLD WING (uncomment wingafterauton in macros.h and use afterauton macro)
+void Assembly::wing() {
+    if (Controller.ButtonY.pressing() && wingafterauton == true) {
+        wing_piston.set(true);
+    } else if (!Controller.ButtonY.pressing() && wingafterauton == false) {
+        wing_piston.set(true);
+    } else if (Controller.ButtonY.pressing() && wingafterauton == false) {
+        wingafterauton = true;
+        wing_piston.set(false);
+   } else {
+    wing_piston.set(false);
+    }
+}
 
 //     } else if (!Controller.ButtonY.pressing() && wingafterauton == false) {
 //         wing_piston.set(false);

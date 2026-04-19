@@ -23,8 +23,8 @@ std::string red_sawp(bool calibrate, mik::auto_variation var, bool get_name) {
     assembly.wing_piston.toggle();
 
     //drive towards 1st matchloader
-    chassis.turn_to_point(-49.2, -47.4, {.timeout = 100});
-    chassis.drive_to_point(-49.2, -47.4);
+    chassis.turn_to_point(-49.2, -47.6, {.timeout = 100});
+    chassis.drive_to_point(-49.2, -47.6);
     matchloader_down();
     wait(0.2,sec);
     chassis.turn_to_angle(270, {.settle_time = 20});
@@ -36,9 +36,9 @@ std::string red_sawp(bool calibrate, mik::auto_variation var, bool get_name) {
 
     // 1st long goal
     chassis.cancel_motion();
-    // chassis.turn_to_point(-27.5, -47.2, {.angle_offset=180, .wait=false});
-    // chassis.drive_to_point(-27.5, -47.2);
-    chassis.drive_to_pose(-27.5, -47.2, 270, {.timeout = 1250}); //drive towards
+    chassis.turn_to_point(-27.5, -47.2, {.angle_offset=180, .timeout = 150});
+    chassis.drive_to_point(-27.5, -47.2, {.timeout = 1250});
+    // chassis.drive_to_pose(-27.5, -47.2, 270, {.timeout = 1250}); //drive towards
     score_high(); //score long goal
     chassis.drive_distance(-500, {.heading=270, .max_voltage=4, .min_voltage = 3, .timeout=500});
     matchloader_up();
@@ -48,7 +48,7 @@ std::string red_sawp(bool calibrate, mik::auto_variation var, bool get_name) {
     chassis.drive_distance(.5, {.max_voltage=6, .min_voltage=2});
     assembly.hood_piston.open();
     chassis.drive_to_pose(-23.4,-30.0, 10.0, {.min_voltage=6, .wait = false});
-    wait(.45, sec);
+    wait(.55, sec);
         matchloader_down();
     chassis.wait();
 
@@ -65,7 +65,7 @@ std::string red_sawp(bool calibrate, mik::auto_variation var, bool get_name) {
     chassis.turn_to_angle(270);
 
     // 2nd long goal
-    chassis.drive_to_pose(-32.6, 46.6, 270, {.min_voltage = 6});
+    chassis.drive_to_pose(-32.6, 46.6, 270, {.min_voltage = 6, .timeout = 1000});
     score_high();
     chassis.drive_distance(-500, {.heading=270, .min_voltage=6, .timeout=850});
     // reset in case of odom drift
@@ -85,7 +85,7 @@ std::string red_sawp(bool calibrate, mik::auto_variation var, bool get_name) {
 
     // mid goal
     chassis.set_drive_constants(12, 1.38, 0, 10, 0);
-    chassis.drive_to_pose(-11.4, 14.7, 315, {.max_voltage =12, .wait=false, .settle_time=10, .settle_error = 2});
+    chassis.drive_to_pose(-11.4, 14.7, 315, {.max_voltage =12, .wait=false, .settle_time=10, .timeout = 1700, .settle_error = 3});
     wait(.45, sec);
     // index balls to score mid
     outtake();

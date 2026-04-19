@@ -35,8 +35,9 @@ std::string red_right_elim(bool calibrate, mik::auto_variation var, bool get_nam
 
     // long goal
     chassis.cancel_motion();
-   chassis.turn_to_point(-27.5, -47.2, {.angle_offset=180, .wait=false, .timeout = 1250});
-    chassis.drive_to_point(-27.5, -47.2);
+    chassis.drive_to_pose(-27.5, -47.2, 270, {.timeout = 1250}); //drive towards
+//    chassis.turn_to_point(-27.5, -47.2, {.angle_offset=180, .wait=false, .timeout = 1250});
+//     chassis.drive_to_point(-27.5, -47.2);
     score_high(); //score long goal
     chassis.drive_distance(-500, {.heading=270, .max_voltage=4, .min_voltage = 3, .timeout=500});
     matchloader_up();
@@ -45,11 +46,11 @@ std::string red_right_elim(bool calibrate, mik::auto_variation var, bool get_nam
     // wing
     // chassis.drive_distance(0.5);
     //chassis.left_swing_to_angle(90);
-    chassis.drive_to_pose(-32,-38,5, {.lead = 0.1});
+    chassis.drive_to_pose(-32,-39, 5, {.lead = 0.1});
     stop_intake();
-    chassis.turn_to_point(-8.5, -38.2);
+    chassis.turn_to_point(-8.5, -39.2);
     assembly.wing_piston.toggle();
-    chassis.drive_to_point(-8.5, -38.2, {.timeout = 10000});
+    chassis.drive_to_point(-8.5, -39.2, {.timeout = 10000});
     chassis.turn_to_angle(55, {.timeout = 10000});
     chassis.stop_drive(hold);
     wait(10, sec);

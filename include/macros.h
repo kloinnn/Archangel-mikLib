@@ -12,6 +12,7 @@ extern double hue;
 extern double scoringTime;
 extern bool wingafterauton;
 extern bool odomafterauton;
+extern bool midscoreindexing;
 
 void intake_in();
 

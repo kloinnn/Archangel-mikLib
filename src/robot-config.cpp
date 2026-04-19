@@ -10,7 +10,7 @@ vex::competition Competition;
 bool calibrating = false;
 
 // Allows recalibration of the inertial using MINIMUN_INERTIAL_CALIBRATION_ERROR
-bool force_calibrate_inertial = true;
+bool force_calibrate_inertial = false;
 
 // After inertial sensor calibration the program waits 1 second and checks 
 // to see if the angle has changed more than this value. If so, it will recalibrate 

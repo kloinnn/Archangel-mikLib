@@ -39,13 +39,13 @@ std::string blue_right_elim(bool calibrate, mik::auto_variation var, bool get_na
     chassis.drive_to_point(-27.5, -47.2, {.timeout = 1250});
     matchloader_up();
     score_high(); //score long goal
-    chassis.drive_distance(-500, {.heading=270, .max_voltage=4, .min_voltage = 3, .timeout=1000});
+    chassis.drive_distance(-500, {.heading=270, .max_voltage=4, .min_voltage = 3, .timeout=1200});
     //bump
     chassis.drive_distance(6, {.heading = 270});
     assembly.hood_piston.open();
     stop_intake();
-    chassis.drive_distance(-500, {.heading = 270, .max_voltage = 12, .timeout = 300});
-    chassis.drive_distance(-500, {.heading = 270, .max_voltage = 4, .timeout = 300});
+    chassis.drive_distance(-500, {.heading = 270, .max_voltage = 12, .timeout = 400});
+    chassis.drive_distance(-500, {.heading = 270, .max_voltage = 4, .timeout = 700});
     chassis.stop_drive(hold);
     assembly.top_intake.spin(fwd, 12, volt);
     wait(10, sec);
